@@ -9,15 +9,13 @@ body{
 .center-text{
   text-align: center;
 }
-
 .header {
-  padding: 2rem 0rem;
+  padding: 1rem 0rem;
   background-color: #FF4538;
 }
 .header > img{
   width: 40px;
 }
-
 .container {
   margin: 0 1rem;
 }
@@ -27,7 +25,9 @@ h2{
 h3{
   margin: 3rem;
 }
-
+img{
+  width: 10rem;
+}
 .section-form{
   display: flex;
   justify-content: center;
@@ -35,7 +35,6 @@ h3{
 .section-form > .input-text{
     color: black;
 }
-
 .btn{
   background-color: #FFDF00;
   color: black;
@@ -44,7 +43,6 @@ h3{
   padding: 0.75rem;
   border-radius: 0rem 0.5em 0.5rem 0rem;
 }
-
 .input-text{
   padding: 0.75rem;
   border-radius: 0.5rem 0em 0rem 0.5rem;
@@ -55,6 +53,8 @@ h3{
   grid-template-rows: 50% 50%;
   gap: 0rem 2rem;
 }
+
+
 .field-l{
   display:grid;
   place-items: center start;
@@ -69,4 +69,8 @@ h3{
   grid-template-columns: repeat(4,1fr);
   grid-template-rows: repeat(2,1fr);
   place-items: center;
+  @media screen and (max-width: 480px) {
+      margin:0rem;
+      grid-template-columns:repeat(2, 1fr)
+    }
 }
