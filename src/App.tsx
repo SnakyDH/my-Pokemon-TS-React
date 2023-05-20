@@ -3,7 +3,7 @@ import { ResponseAPI, MyPokemon } from "./interfaces/Pokemon";
 import { ErrorTypes } from "./interfaces/ErrorTypes";
 import "./App.css";
 
-const baseUrl = "http://localhost:3000/api/";
+const baseUrl = "https://api-pokemon-filter.fly.dev/api/";
 
 function App(): JSX.Element {
   const [text, setText] = useState<string>("");
