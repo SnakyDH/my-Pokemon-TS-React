@@ -2,32 +2,39 @@
   font-family: sans-serif,monospace;
   color: white;
   list-style: none;
+  text-decoration: none;
+  --bg-red: #FF4538;
+  --bg-blue: #1E1E2E;
+  --bg-yellow: #FFDF00;
 }
 body{
-  background-color: #1E1E2E;
+  background-color: var(--bg-blue);
+}
+main{
+  height: 90vh;
 }
 .center-text{
   text-align: center;
 }
-
 .header {
-  padding: 2rem 0rem;
-  background-color: #FF4538;
+  padding: 1rem 0rem;
+  background-color: var(--bg-red);
 }
 .header > img{
   width: 40px;
 }
-
 .container {
   margin: 0 1rem;
 }
 h2{
   padding: 2rem 0rem;
 }
-h3{
+ h3{
   margin: 3rem;
+} 
+img{
+  width: 10rem;
 }
-
 .section-form{
   display: flex;
   justify-content: center;
@@ -35,16 +42,14 @@ h3{
 .section-form > .input-text{
     color: black;
 }
-
 .btn{
-  background-color: #FFDF00;
+  background-color: var(--bg-yellow);
   color: black;
   font-size: medium;
   font-weight: bold;
   padding: 0.75rem;
   border-radius: 0rem 0.5em 0.5rem 0rem;
 }
-
 .input-text{
   padding: 0.75rem;
   border-radius: 0.5rem 0em 0rem 0.5rem;
@@ -53,7 +58,7 @@ h3{
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 50% 50%;
-  gap: 0rem 2rem;
+  gap: 0rem 1rem;
 }
 .field-l{
   display:grid;
@@ -67,6 +72,34 @@ h3{
   display: grid;
   margin: 3rem;
   grid-template-columns: repeat(4,1fr);
-  grid-template-rows: repeat(2,1fr);
   place-items: center;
+  @media screen and (max-width: 700px) {
+    margin: 0rem;
+    grid-template-columns:repeat(3, 1fr)
+  }
+  @media screen and (max-width: 480px) {
+      margin: 0rem;
+      grid-template-columns:repeat(2, 1fr)
+    }
+}
+figcaption{
+  text-align: center;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--bg-red);
+  padding: 0.7rem;
+}
+.link-snaky{
+  font-style: italic;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+.link-snaky:hover{
+  background-color:#38f2ff;
+  color: black
 }
