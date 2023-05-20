@@ -1,27 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ResponseAPI, MyPokemon } from "./interfaces/Pokemon";
+import { ErrorTypes } from "./interfaces/ErrorTypes";
 import "./App.css";
 
 const baseUrl = "http://localhost:3000/api/";
 
 function App(): JSX.Element {
-  const [text, setText] = useState("");
-  const [clicked, setClicked] = useState(false);
-  const [pokemon, setPokemon] = useState(null);
-
-  useEffect(() => {
-    const getPokemon = async () => {
+  const [text, setText] = useState<string>("");
+  const [error, setError] = useState<ErrorTypes | null>(null);
+  const [pokemon, setPokemon] = useState<MyPokemon | null>(null);
+  const getPokemon = async () => {
+    try {
       const response = await fetch(`${baseUrl}${text.toLowerCase()}`);
       if (response.status === 200) {
         const data: ResponseAPI = await response.json();
         const myPokemon: MyPokemon = data.myPokemon;
         setPokemon(myPokemon);
-      } else {
+        setError(null);
+      } else if (response.status === 404) {
+        setError(ErrorTypes.NOT_FOUND);
         setPokemon(null);
+      } else if (response.status === 400) {
+        setError(ErrorTypes.BAD_REQUEST);
+      } else if (response.status === 500) {
+        setError(ErrorTypes.SERVER_ERROR);
       }
-    };
-    clicked ? getPokemon() : null;
-  }, [clicked]);
+    } catch (error) {
+      setError(ErrorTypes.BAD_REQUEST);
+    }
+  };
   return (
     <>
       <header className="header">
@@ -36,19 +43,18 @@ function App(): JSX.Element {
             type="text"
             placeholder="Your Pokemon"
           />
-          <button
-            className="btn"
-            onClick={() => setClicked((prev) => !prev)}
-            type="button"
-          >
+          <button className="btn" onClick={getPokemon} type="button">
             Search
           </button>
-          {!clicked ? <span>Click Again</span> : null}
         </section>
-        {pokemon === null ? (
-          <h3 className="center-text">
-            You have not searched for a valid Pokemon
-          </h3>
+        {error === ErrorTypes.NOT_FOUND ? (
+          <h3 className="center-text">{ErrorTypes.NOT_FOUND} 🤡</h3>
+        ) : null}
+        {error === ErrorTypes.BAD_REQUEST ? (
+          <h3 className="center-text">{ErrorTypes.BAD_REQUEST} 🙄</h3>
+        ) : null}
+        {error === ErrorTypes.SERVER_ERROR ? (
+          <h3 className="center-text">{ErrorTypes.SERVER_ERROR} 🧐</h3>
         ) : null}
         {pokemon ? (
           <>
@@ -61,7 +67,7 @@ function App(): JSX.Element {
                 <span>{pokemon.id}</span>
               </article>
               <article className="field-d">
-                <span>Name:</span>
+                <span className="text-center">Name:</span>
               </article>
               <article className="field-l">
                 <span>{pokemon.name}</span>
@@ -71,7 +77,7 @@ function App(): JSX.Element {
               </article>
               <article className="field-l">
                 <ul>
-                  {pokemon.types.map((type: string, key: string) => (
+                  {pokemon.types.map((type: string) => (
                     <li>{type}</li>
                   ))}
                 </ul>
@@ -130,7 +136,18 @@ function App(): JSX.Element {
           </>
         ) : null}
       </main>
-      <footer></footer>
+      <footer className="footer">
+        <p className="center-text">
+          Made with love 💚
+          <a
+            className="link-snaky"
+            href="https://github.com/SnakyDH"
+            target="_blank"
+          >
+            @SnakyDH
+          </a>
+        </p>
+      </footer>
     </>
   );
 }
